@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My ePortfolio</title>
 
-    <!-- Modern, Readable Monospace Font -->
+    <!-- Modern, Minimalist, Feminine Monospace Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
 
-
-    
     <style>
         /* Apply Monospace Font */
         html, body {
@@ -21,13 +19,14 @@
             text-align: center; /* Center text */
             background-color: black; /* Minimalist dark background */
             color: white; /* Minimalist white text */
-            font-family: 'Inconsolata', monospace; /* Modern Monospace Font */
+            font-family: 'Inconsolata', monospace; /* Elegant Monospace Font */
         }
 
-        /* Ensures headers and text also use monospace */
+        /* Ensures headers and text also use the stylish font */
         h1, h2, p {
             font-family: 'Inconsolata', monospace;
-            font-weight: 400; /* Keeps it looking clean */
+            font-weight: 400;
+            letter-spacing: 0.5px; /* Adds a subtle airy effect */
         }
 
         /* Container ensures content is centered */
@@ -37,6 +36,13 @@
             align-items: center;
             justify-content: center;
             width: 100%;
+        }
+
+        /* Profile Photo Styling */
+        .profile-pic {
+            width: 150px; /* Adjust size as needed */
+            border-radius: 50%; /* Makes it circular */
+            margin-bottom: 10px; /* Adds space below */
         }
 
         /* Ensure the video scales properly */
@@ -50,8 +56,11 @@
     <div class="container">
         <h1>Welcome to My ePortfolio</h1>
 
-        <img src="https://avatars.githubusercontent.com/u/131182459?v=4" alt="My GitHub Profile Photo" class="profile-pic">
-        
+        <!-- GitHub Profile Photo Under the Heading -->
+        <img src="https://avatars.githubusercontent.com/u/YOUR_GITHUB_USER_ID?v=4" 
+             alt="My GitHub Profile Photo" 
+             class="profile-pic">
+
         <p>This is my GitHub Pages website.</p>
 
         <h2>My Code Review Video</h2>
