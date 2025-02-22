@@ -159,6 +159,322 @@ ul {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen>
         </iframe>
+
+        <p>Enhancements:</p>
+        <pre><code>
+        //The following areas have been enhanced to allow the app to function better for the final submission to the App Store. These enhancements have improved the app.
+
+//Main Activity:
+
+package com.example.shaynamitchellweighttrackingapp;
+
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.os.Handler;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final int SPLASH_SCREEN_DELAY = 4000; // 4 seconds
+
+    EditText usernameInput, passwordInput;
+    Button loginButton, createAccountButton;
+    SQLiteDatabase db;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main); // Splash Screen
+
+        // Delay and transition to login screen after 4 seconds
+        new Handler().postDelayed(() -> {
+            setContentView(R.layout.activity_login); // Load the login layout after the splash screen
+
+            // Initialize the input fields and buttons
+            usernameInput = findViewById(R.id.username);
+            passwordInput = findViewById(R.id.password);
+            loginButton = findViewById(R.id.btnLogin);
+            createAccountButton = findViewById(R.id.btnCreateAccount);
+
+            // Create or open the SQLite database
+            db = openOrCreateDatabase("WeightTrackingDB", MODE_PRIVATE, null);
+
+            // Create necessary tables if they don't exist
+            db.execSQL("CREATE TABLE IF NOT EXISTS Users(username TEXT PRIMARY KEY, password TEXT);");
+            db.execSQL("CREATE TABLE IF NOT EXISTS DailyWeight(weight REAL, unit TEXT, date TEXT);");
+            db.execSQL("CREATE TABLE IF NOT EXISTS GoalWeight(goal REAL);"); // add date and unit later
+
+            // Handle login button click
+            loginButton.setOnClickListener(view -> {
+                String username = usernameInput.getText().toString();
+                String password = passwordInput.getText().toString();
+                if (validateLogin(username, password)) {
+                    // Navigate to the SMS screen after successful login
+                    Intent intent = new Intent(MainActivity.this, SMS.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(MainActivity.this, "Invalid Login.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // Handle create account button click
+            createAccountButton.setOnClickListener(view -> {
+                String username = usernameInput.getText().toString();
+                String password = passwordInput.getText().toString();
+                if (!username.isEmpty() && !password.isEmpty()) {
+                    // Insert new user into the Users table
+                    db.execSQL("INSERT INTO Users(username, password) VALUES(?, ?)", new Object[]{username, password});
+                    Toast.makeText(MainActivity.this, "Account Created.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Username/Password cannot be empty.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }, SPLASH_SCREEN_DELAY);
+    }
+
+    // Method to validate the user's login credentials
+    private boolean validateLogin(String username, String password) {
+        Cursor cursor = db.rawQuery("SELECT * FROM Users WHERE username=? AND password=?", new String[]{username, password});
+        boolean isValid = cursor.getCount() > 0;
+        cursor.close();
+        return isValid;
+    }
+}
+
+
+
+
+
+
+//SMS Functionality:
+
+package com.example.shaynamitchellweighttrackingapp;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SMS extends AppCompatActivity {
+
+    private ImageView draggableDot;
+    private View smsSwitch;
+    private Button goButton;
+    private float dY;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.sms); // Links to the SMS
+
+        draggableDot = findViewById(R.id.draggableDot);
+        smsSwitch = findViewById(R.id.smsSwitch);
+        goButton = findViewById(R.id.goButton);
+
+        // Initialize the draggable dot position based on saved preferences
+        SharedPreferences preferences = getSharedPreferences("sms_prefs", MODE_PRIVATE);
+        boolean isSmsEnabled = preferences.getBoolean("sms_notifications", true); // Default to ON (true)
+
+        // Set the initial position of the dot (UP = ON, DOWN = OFF)
+        if (isSmsEnabled) {
+            draggableDot.setY(smsSwitch.getY()); // Set to top position
+        } else {
+            draggableDot.setY(smsSwitch.getY() + smsSwitch.getHeight() - draggableDot.getHeight()); // Set to bottom position
+        }
+
+        // Handle draggable dot listener for dragging
+        draggableDot.setOnTouchListener((v, event) -> {
+
+
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                    dY = v.getY() - event.getRawY();  // Initialize dragging distance
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    // Set limits for how far the dot can move
+                    float newY = event.getRawY() + dY;
+                    float minY = smsSwitch.getY();
+                    float maxY = smsSwitch.getY() + smsSwitch.getHeight() - draggableDot.getHeight();
+                    if (newY >= minY && newY <= maxY) {
+                        draggableDot.setY(newY);
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    // Snap the dot to the top (ON) or bottom (OFF) based on its final position
+                    float halfwayPoint = smsSwitch.getY() + (smsSwitch.getHeight() / 2.0f);
+                    if (draggableDot.getY() < halfwayPoint) {
+                        // Snap to ON (top)
+                        draggableDot.setY(smsSwitch.getY());
+                        saveSmsPreference(true);
+                        Toast.makeText(SMS.this, "SMS Notifications ON", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Snap to OFF (bottom)
+                        draggableDot.setY(smsSwitch.getY() + smsSwitch.getHeight() - draggableDot.getHeight());
+                        saveSmsPreference(false);
+                        Toast.makeText(SMS.this, "SMS Notifications OFF", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+            return true;
+        });
+
+        // Go button click logic
+        goButton.setOnClickListener(v -> {
+            // Navigate to the weight log screen
+            Intent intent = new Intent(SMS.this, WeightLogScreen.class);
+            startActivity(intent);
+        });
+    }
+
+    // Method to save SMS preference
+    private void saveSmsPreference(boolean isEnabled) {
+        SharedPreferences preferences = getSharedPreferences("sms_prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("sms_notifications", isEnabled);
+        editor.apply();
+    }
+}
+
+
+
+
+//Weight Log Screen: 
+
+
+
+package com.example.shaynamitchellweighttrackingapp;
+
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.widget.GridLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.widget.Button;
+
+
+
+
+public class WeightLogScreen extends AppCompatActivity {
+    private SQLiteDatabase db;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_weight_log); // Link xml
+
+        // Initialize the database
+        db = openOrCreateDatabase("WeightTrackingDB", MODE_PRIVATE, null);
+
+        // Retrieve SMS preference (optional)
+        SharedPreferences preferences = getSharedPreferences("sms_prefs", MODE_PRIVATE);
+        boolean isSmsEnabled = preferences.getBoolean("sms_notifications", false); // Default to false if not found
+
+        // Display a message based on SMS preference
+        if (isSmsEnabled) {
+            Toast.makeText(this, "SMS Notifications are ON", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "SMS Notifications are OFF", Toast.LENGTH_SHORT).show();
+        }
+
+        // Button to navigate to the Add Weight Screen
+        Button addWeightButton = findViewById(R.id.addWeightButton);
+        addWeightButton.setOnClickListener(v -> {
+            Intent intent = new Intent(WeightLogScreen.this, AddWeightScreen.class);
+            startActivity(intent);
+        });
+
+
+        // Populate the weight log grid
+        populateGrid();
+    }
+
+    private void populateGrid() {
+        GridLayout weightLogGrid = findViewById(R.id.weightLogGrid);
+
+        // Clear any previous data from the grid
+        weightLogGrid.removeAllViews();
+
+        // Query and display the daily weight data in the first column
+        Cursor weightCursor = db.rawQuery("SELECT weight, unit, date FROM DailyWeight", null);
+        if (weightCursor.moveToFirst()) {
+            do {
+                String weight = weightCursor.getString(0);
+                String unit = weightCursor.getString(1);
+                String date = weightCursor.getString(2);
+
+                TextView weightEntry = new TextView(this);
+                //previous version -weightEntry.setText(weight + " " + unit + " " + date);
+                weightEntry.setText(getString(R.string.weight_entry, weight, unit, date));
+                weightLogGrid.addView(weightEntry);
+            } while (weightCursor.moveToNext());
+        }
+//add this line
+        weightCursor.close();
+
+        // Query and display the login data in the second column
+        //add in date later if needed
+        Cursor loginCursor = db.rawQuery("SELECT username, password FROM Users", null);
+        if (loginCursor.moveToFirst()) {
+            do {
+                String username = loginCursor.getString(0);
+                String password = loginCursor.getString(1);
+                //this can be used later if adding date to second column:
+                //String loginDate = loginCursor.getString(2);
+
+                TextView loginEntry = new TextView(this);
+                //previous version -loginEntry.setText(username + " " + password + " " + loginDate);
+                loginEntry.setText(getString(R.string.login_entry, username, password));
+                weightLogGrid.addView(loginEntry);
+            } while (loginCursor.moveToNext());
+        }
+
+        //addline
+        loginCursor.close();
+
+        // Query and display the goal weight data in the third column
+        //can add date back in here later if needed:
+        Cursor goalWeightCursor = db.rawQuery("SELECT goal FROM GoalWeight", null);
+        if (goalWeightCursor.moveToFirst()) {
+            do {
+                String goalWeight = goalWeightCursor.getString(0);
+                //String goalUnit = goalWeightCursor.getString(1);
+                //can add date back in later:
+                //String goalDate = goalWeightCursor.getString(2);
+                TextView goalEntry = new TextView(this);
+                //previous -goalEntry.setText(goalWeight + " " + goalUnit + " " + goalDate);
+                //add date back in here in needed:
+                goalEntry.setText(getString(R.string.goal_log_entry, goalWeight));
+                weightLogGrid.addView(goalEntry);
+            } while (goalWeightCursor.moveToNext());
+        }
+
+        goalWeightCursor.close();
+
+        //originally closed all three together at bottom.
+
+    }
+}
+        </code></pre>
+
+
+            
     </div>
 </body>
 </html>
