@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My ePortfolio</title>
 
-    <!-- Add Monospace Font from Google Fonts -->
+    <!-- Monospace Font -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* Make sure the body fills the full screen */
+        /* Apply Monospace Font */
         html, body {
             height: 100%;
             margin: 0;
@@ -19,7 +19,13 @@
             text-align: center; /* Center text */
             background-color: black; /* Minimalist dark background */
             color: white; /* Minimalist white text */
-            font-family: 'JetBrains Mono', monospace; /* Apply monospace font */
+            font-family: 'JetBrains Mono', monospace; /* Monospace Font */
+        }
+
+        /* Ensures headers and text also use monospace */
+        h1, h2, p {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 400; /* Normal weight for clean look */
         }
 
         /* Container ensures content is centered */
@@ -35,12 +41,6 @@
         iframe {
             max-width: 100%;
             border-radius: 8px; /* Optional: Smooth edges */
-        }
-
-        /* Add spacing for better layout */
-        h1, h2, p {
-            margin-bottom: 10px;
-            font-weight: 400;
         }
     </style>
 </head>
