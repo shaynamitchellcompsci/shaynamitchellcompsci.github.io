@@ -5,105 +5,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shayna Mitchell</title>
 
-    <!-- Chosen Font -->
+    <!-- Chosen Font: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* Apply  Font */
+        /* Apply Poppins Font */
         html, body {
-            height: 100%;
+            height: auto; /* Allows scrolling */
             margin: 0;
-            display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
+            padding: 20px; /* Add space around the content */
             text-align: center; /* Center text */
-            background-color: black; /* black background */
-            color: white; /* White text*/
-            font-family: 'Poppins', monospace; /*  Font */
+            background-color: black; /* Black background */
+            color: white; /* White text */
+            font-family: 'Poppins', sans-serif;
         }
 
-     
-        h1, h2, p {
-            font-family: 'Poppins', monospace;
-            font-weight: 400;
-            letter-spacing: 0.5px; 
-        }
-
-        /* Container ensures content is centered */
+        /* Container Styling */
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left; /* Align text to the left for readability */
         }
 
-        /* Profile Photo Styling */
+        /* Profile Picture Styling */
         .profile-pic {
-            width: 150px; /* Adjust size  */
-            border-radius: 50%; /* circular */
-            margin-bottom: 10px; /* space below */
+            display: block;
+            width: 150px;
+            border-radius: 50%;
+            margin: 20px auto; /* Add spacing below */
+        }
+
+        /* Section Styling */
+        h1, h2 {
+            text-align: center;
+        }
+
+        /* Paragraph Spacing */
+        p {
+            margin-bottom: 15px; /* Adds space between paragraphs */
+            line-height: 1.6; /* Improves readability */
+        }
+
+        /* Unordered List Styling */
+        ul {
+            list-style: square;
+            padding-left: 20px;
+        }
+
+        /* GitHub Link Styling */
+        .github-link {
+            font-size: 18px;
+            font-weight: 500;
+            color: #ff69b4; /* Soft pink accent */
+            text-decoration: none;
+            border-bottom: 2px solid #ff69b4;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .github-link:hover {
+            color: #ff1493;
+            border-bottom: 2px solid #ff1493;
         }
 
         /* Ensure the video scales properly */
         iframe {
             max-width: 100%;
-            border-radius: 8px; /*  Smooth edges */
+            border-radius: 8px; /* Smooth edges */
         }
     </style>
 </head>
 <body>
     <div class="container">
         
-        <h1>Welcome to my portfolio!</h1>
+        <!-- Profile Picture -->
+        <img src="https://avatars.githubusercontent.com/u/131182459?v=4" 
+             alt="My GitHub Profile Photo" class="profile-pic">
+
+        <h1>Welcome to My Portfolio!</h1>
         <p>CS499 Capstone Course</p>
 
+        <!-- GitHub Profile Link -->
+        <p>
+            <a href="https://github.com/shaynamitchellcompsci" target="_blank" class="github-link">
+                View My GitHub Profile
+            </a>
+        </p>
 
-        <h1>Welcome to my portfolio!</h1>
-<p>CS499 Capstone Course</p>
+        <!-- Self-Introduction -->
+        <h2>Self-Introduction</h2>
 
-<!-- Self-Introduction -->
-<h2>--------------------</h2>
+        <p><strong>A. How long have you been in the Computer Science program?</strong><br>
+        I began this program in 2021. I will be graduating this year. This program is very concentrated, and I have covered a lot of information in the short time I have attended this school.</p>
 
-<p><strong>A. How long have you been in the Computer Science program?</strong><br>
-I began this program in 2021. I will be graduating this year. This program is very concentrated, and I have covered a lot of information in the short time I have attended this school.
-</p>
+        <p><strong>B. What have you learned while in the program?</strong><br>
+        I have learned that you can know a lot of general information about software development and be able to incorporate this information across multiple languages. I have also learned to research valuable and correct information to support my work, as well as how important it is to organize and save your projects. Learning the software development lifecycle was an important part of my journey, along with understanding the differences between waterfall and agile.</p>
 
-<p><strong>B. What have you learned while in the program?</strong><br>
-I have learned that you can know a lot of general information about software development and be able to incorporate this information across multiple languages. I have also learned to research valuable and correct information to support my work, as well as how important it is to organize and save your projects. Learning the software development lifecycle was an important part of my journey, along with understanding the differences between waterfall and agile.
-</p>
+        <p><strong>C. What specific skills do you aim to demonstrate?</strong><br>
+        I aim to demonstrate my skills pertaining to software engineering and design, algorithms and data structures, and databases by displaying an example of a project that will be improved upon in this course. This will highlight specific scenarios in which I showed my understanding of these three topics in addition to my ability to consistently improve upon projects over time.</p>
 
-<p><strong>C. What specific skills do you aim to demonstrate?</strong><br>
-I aim to demonstrate my skills pertaining to software engineering and design, algorithms and data structures, and databases by displaying an example of a project that will be improved upon in this course. This will highlight specific scenarios in which I showed my understanding of these three topics in addition to my ability to consistently improve upon projects over time.
-</p>
+        <p><strong>D. How do the specific skills you will demonstrate align with your career plans?</strong><br>
+        My demonstrated skills will pertain to my degree and career in software development very well. These skills will highlight aspects that will be valuable in my career as a developer, such as consistency and flexibility, as technology is always changing.</p>
 
-<p><strong>D. How do the specific skills you will demonstrate align with your career plans?</strong><br>
-My demonstrated skills will pertain to my degree and career in software development very well. These skills will highlight aspects that will be valuable in my career as a developer, such as consistency and flexibility, as technology is always changing.
-</p>
+        <p><strong>E. How does this contribute to your specialization?</strong><br>
+        My specialization in my career is full-stack software development. This capstone, highlighting my skills, will prove how I will be of use as a full-stack developer in the industry.</p>
 
-<p><strong>E. How does this contribute to your specialization?</strong><br>
-My specialization in my career is full-stack software development. This capstone, highlighting my skills, will prove how I will be of use as a full-stack developer in the industry.
-</p>
+        <!-- Enhancement Categories -->
+        <h2>Enhancement Categories</h2>
+        <ul>
+            <li>Software Design and Engineering</li>
+            <li>Algorithms and Data Structures</li>
+            <li>Databases</li>
+        </ul>
 
-<!-- Enhancement Categories -->
-<h2>Enhancement Categories</h2>
-<ul>
-    <li>Software Design and Engineering</li>
-    <li>Algorithms and Data Structures</li>
-    <li>Databases</li>
-</ul>
-         
-        
-
-
-        
-        <!-- GitHub Profile Photo -->
-        <img src="https://avatars.githubusercontent.com/u/131182459?v=4" 
-     alt="My GitHub Profile Photo" 
-     class="profile-pic">
-
-        
-
+        <!-- Code Review Video -->
         <h2>My Code Review Video</h2>
         <iframe width="560" height="315" 
             src="https://www.youtube.com/embed/jd26rGCH4-8" 
@@ -111,11 +126,7 @@ My specialization in my career is full-stack software development. This capstone
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen>
         </iframe>
-
-
-
-        
-        
     </div>
 </body>
 </html>
+        
