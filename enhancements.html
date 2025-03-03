@@ -19,15 +19,29 @@
             padding: 20px;
         }
 
-	    /* Second Scroll Box: Properly Formats Lists */
-.scroll-box ul {
-    padding-left: 20px;
-}
+	        /* Second Scroll Box: Properly Formats Lists */
+    .scroll-box ul {
+        padding-left: 30px;   
+        margin: 15px 0;  
+    }
 
-.scroll-box li {
-    margin-bottom: 10px; /* Adds space between list items */
-    line-height: 1.6;
-}
+    .scroll-box li {
+        margin-bottom: 12px; 
+        line-height: 1.8; 
+        font-size: 16px; /*text is readable */
+    }
+
+    /* Improve Scroll Box Padding */
+    .scroll-box {
+        padding: 20px; 
+        max-width: 95%; 
+        max-height: 300px;
+        overflow-y: auto; /*vertical scrolling */
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        border: 2px solid #ff69b4; /* Keeps the pink border */
+    }
+
 
         /* Navigation Styles */
         nav {
