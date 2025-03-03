@@ -82,16 +82,19 @@
 
         /* Scroll Box */
         .scroll-box {
-            max-width: 100%;
-            max-height: 200px;
-            overflow-y: auto;
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 14px;
-            line-height: 1.5;
-            border: 1px solid #ff69b4;
-        }
+    		max-width: 100%; 
+    		max-height: 200px; /* Adjust height as needed */
+    		overflow-y: auto; /* Enables vertical scrolling */
+    		overflow-x: hidden; /* Prevents horizontal scrolling */
+    		background-color: rgba(255, 255, 255, 0.1); 
+    		padding: 10px;
+    		border-radius: 8px;
+    		font-size: 14px;
+    		line-height: 1.5;
+    		border: 1px solid #ff69b4; /* Pink border */
+    		white-space: pre-wrap; /* Ensures text wraps properly */
+    		word-wrap: break-word;
+	}
 
         /* Code Box */
         pre {
